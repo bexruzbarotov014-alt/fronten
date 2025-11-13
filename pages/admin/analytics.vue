@@ -1,8 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <AdminHeader />
-    
-    <div class="container mx-auto px-4 py-8">
+  <div class="container mx-auto px-4 py-8">
       <div class="flex justify-between items-center mb-8">
         <h1 class="text-3xl font-bold">Analytics va Hisobotlar</h1>
         <button 
@@ -120,16 +117,17 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
+import { Chart, registerables } from 'chart.js/auto'
 import { useAuthStore } from '~/stores/auth'
 import { useToast } from '~/composables/useToast'
 
 definePageMeta({
-  middleware: 'admin-auth'
+  middleware: 'admin-auth',
+  layout: 'admin'
 })
 
 const config = useRuntimeConfig()
@@ -158,7 +156,6 @@ const stats = ref({
 const topProducts = ref([])
 const isLoading = ref(true)
 let charts = {}
-let Chart = null
 
 onMounted(async () => {
   authStore.loadFromLocalStorage()
@@ -168,8 +165,8 @@ onMounted(async () => {
     return
   }
 
-  const chartModule = await import('chart.js/auto')
-  Chart = chartModule.default
+  // Chart.js allaqachon import qilingan
+  Chart.register(...registerables)
   await fetchAnalytics()
 })
 

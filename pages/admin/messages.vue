@@ -1,8 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <AdminHeader />
-
-    <div class="container mx-auto px-4 py-8">
+  <div class="container mx-auto px-4 py-8">
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
         <h1 class="text-3xl font-bold">Aloqa xabarlari</h1>
         <div class="flex flex-wrap gap-3">
@@ -161,7 +158,6 @@
         </section>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -170,7 +166,8 @@ import { useAuthStore } from '~/stores/auth'
 import { useToast } from '~/composables/useToast'
 
 definePageMeta({
-  middleware: 'admin-auth'
+  middleware: 'admin-auth',
+  layout: 'admin'
 })
 
 const config = useRuntimeConfig()

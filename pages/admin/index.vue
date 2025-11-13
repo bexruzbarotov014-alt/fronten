@@ -1,13 +1,39 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <AdminHeader />
+  <!-- Admin Header -->
+  <header class="bg-white shadow-md">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <NuxtLink to="/admin" class="text-2xl font-bold text-red-600 flex items-center">
+          <span class="text-3xl mr-2">🍷</span>
+          Admin Panel
+        </NuxtLink>
+        <nav class="flex space-x-6">
+          <NuxtLink to="/admin" class="text-gray-700 hover:text-red-600 font-medium" active-class="text-red-600">Dashboard</NuxtLink>
+          <NuxtLink to="/admin/analytics" class="text-gray-700 hover:text-red-600 font-medium" active-class="text-red-600">Analytics</NuxtLink>
+          <NuxtLink to="/admin/products" class="text-gray-700 hover:text-red-600 font-medium" active-class="text-red-600">Mahsulotlar</NuxtLink>
+          <NuxtLink to="/admin/orders" class="text-gray-700 hover:text-red-600 font-medium" active-class="text-red-600">Buyurtmalar</NuxtLink>
+          <NuxtLink to="/admin/messages" class="text-gray-700 hover:text-red-600 font-medium" active-class="text-red-600">Xabarlar</NuxtLink>
+        </nav>
+        <div class="flex items-center space-x-4">
+          <NuxtLink to="/" target="_blank" class="text-gray-700 hover:text-red-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </NuxtLink>
+          <button @click="logout" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+            Chiqish
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Dashboard</h1>
     
-    <div class="container mx-auto px-4 py-8">
-      <h1 class="text-3xl font-bold mb-8">Dashboard</h1>
-      
-      <!-- Statistika kartlari -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <!-- Jami buyurtmalar -->
+    <!-- Statistika kartlari -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <!-- Jami buyurtmalar -->
         <div class="bg-white rounded-lg shadow-md p-6">
           <div class="flex items-center justify-between">
             <div>
@@ -136,7 +162,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -144,7 +169,8 @@ import { ref, onMounted } from 'vue'
 import { useAuthStore } from '~/stores/auth'
 
 definePageMeta({
-  middleware: 'admin-auth'
+  middleware: 'admin-auth',
+  layout: 'admin'
 })
 
 const config = useRuntimeConfig()
@@ -163,13 +189,19 @@ const recentOrders = ref([])
 const loading = ref(true)
 
 onMounted(async () => {
+  console.log('Admin index page mounted')
   authStore.loadFromLocalStorage()
   
+  console.log('Auth status:', authStore.isAuthenticated)
+  console.log('Admin user:', authStore.admin)
+  
   if (!authStore.isAuthenticated) {
+    console.log('Not authenticated, redirecting to login')
     navigateTo('/admin/login')
     return
   }
   
+  console.log('Fetching dashboard data...')
   await fetchDashboardData()
 })
 
@@ -215,6 +247,11 @@ const formatDate = (date) => {
     hour: '2-digit',
     minute: '2-digit'
   })
+}
+
+const logout = () => {
+  authStore.logout()
+  navigateTo('/admin/login')
 }
 
 const getStatusClass = (status) => {

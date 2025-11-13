@@ -1,7 +1,5 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <Header />
-    
     <div v-if="loading" class="container mx-auto px-4 py-12 text-center">
       <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
     </div>
@@ -196,8 +194,6 @@
         </div>
       </div>
     </div>
-    
-    <Footer />
   </div>
 </template>
 

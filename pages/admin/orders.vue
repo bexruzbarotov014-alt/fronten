@@ -1,145 +1,170 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <AdminHeader />
-    
-    <div class="container mx-auto px-4 py-8">
-      <h1 class="text-3xl font-bold mb-8">Buyurtmalar</h1>
-      
-      <!-- Filter -->
-      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div>
-            <label class="block text-sm font-medium mb-2">Status</label>
-            <select 
-              v-model="filterStatus"
-              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-600"
-              @change="fetchOrders"
-            >
-              <option value="">Barchasi</option>
-              <option value="new">Yangi</option>
-              <option value="processing">Jarayonda</option>
-              <option value="delivered">Yetkazildi</option>
-              <option value="canceled">Bekor qilindi</option>
-            </select>
-          </div>
-          
-          <div class="md:col-span-3 flex items-end">
-            <input 
-              v-model="searchQuery"
-              type="text" 
-              placeholder="Buyurtma raqami yoki mijoz ismi..."
-              class="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-600"
-              @input="debouncedSearch"
-            />
-          </div>
+  <!-- Admin Header -->
+  <header class="bg-white shadow-md">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <NuxtLink to="/admin" class="text-2xl font-bold text-red-600 flex items-center">
+          <span class="text-3xl mr-2">🍷</span>
+          Admin Panel
+        </NuxtLink>
+        <nav class="flex space-x-6">
+          <NuxtLink to="/admin" class="text-gray-700 hover:text-red-600 font-medium" active-class="text-red-600">Dashboard</NuxtLink>
+          <NuxtLink to="/admin/analytics" class="text-gray-700 hover:text-red-600 font-medium" active-class="text-red-600">Analytics</NuxtLink>
+          <NuxtLink to="/admin/products" class="text-gray-700 hover:text-red-600 font-medium" active-class="text-red-600">Mahsulotlar</NuxtLink>
+          <NuxtLink to="/admin/orders" class="text-gray-700 hover:text-red-600 font-medium" active-class="text-red-600">Buyurtmalar</NuxtLink>
+          <NuxtLink to="/admin/messages" class="text-gray-700 hover:text-red-600 font-medium" active-class="text-red-600">Xabarlar</NuxtLink>
+        </nav>
+        <div class="flex items-center space-x-4">
+          <NuxtLink to="/" target="_blank" class="text-gray-700 hover:text-red-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </NuxtLink>
+          <button @click="logout" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+            Chiqish
+          </button>
         </div>
       </div>
+    </div>
+  </header>
+
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Buyurtmalar</h1>
+    
+    <!-- Filter -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-2">Status</label>
+          <select 
+            v-model="filterStatus"
+            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-600"
+            @change="fetchOrders"
+          >
+            <option value="">Barchasi</option>
+            <option value="new">Yangi</option>
+            <option value="processing">Jarayonda</option>
+            <option value="delivered">Yetkazildi</option>
+            <option value="canceled">Bekor qilindi</option>
+          </select>
+        </div>
+        
+        <div class="md:col-span-3 flex items-end">
+          <input 
+            v-model="searchQuery"
+            type="text" 
+            placeholder="Buyurtma raqami yoki mijoz ismi..."
+            class="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-600"
+            @input="debouncedSearch"
+          />
+        </div>
+      </div>
+    </div>
+    
+    <!-- Buyurtmalar ro'yxati -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      <div v-if="loading" class="text-center py-12">
+        <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+      </div>
       
-      <!-- Buyurtmalar ro'yxati -->
-      <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <div v-if="loading" class="text-center py-12">
-          <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+      <div v-else-if="orders.length === 0" class="text-center py-12">
+        <p class="text-gray-600">Buyurtmalar topilmadi</p>
+      </div>
+      
+      <div v-else>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="text-left py-3 px-4 font-medium">Buyurtma #</th>
+                <th class="text-left py-3 px-4 font-medium">Mijoz</th>
+                <th class="text-left py-3 px-4 font-medium">Mahsulotlar</th>
+                <th class="text-left py-3 px-4 font-medium">Summa</th>
+                <th class="text-left py-3 px-4 font-medium">Holat</th>
+                <th class="text-left py-3 px-4 font-medium">Sana</th>
+                <th class="text-left py-3 px-4 font-medium">Amallar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr 
+                v-for="order in orders" 
+                :key="order._id"
+                class="border-b hover:bg-gray-50"
+              >
+                <td class="py-3 px-4">
+                  <p class="font-medium text-red-600">{{ order.orderNumber }}</p>
+                </td>
+                <td class="py-3 px-4">
+                  <p class="font-medium">{{ order.customer.name }}</p>
+                  <p class="text-sm text-gray-600">{{ order.customer.phone }}</p>
+                  <p class="text-xs text-gray-500 mt-1">{{ order.customer.address }}</p>
+                </td>
+                <td class="py-3 px-4">
+                  <p class="text-sm">{{ order.items.length }} ta mahsulot</p>
+                  <button 
+                    @click="viewOrderDetails(order)"
+                    class="text-xs text-blue-600 hover:underline"
+                  >
+                    Batafsil ko'rish
+                  </button>
+                </td>
+                <td class="py-3 px-4 font-semibold">
+                  {{ formatPrice(order.totalPrice) }}
+                </td>
+                <td class="py-3 px-4">
+                  <select 
+                    :value="order.status"
+                    @change="updateOrderStatus(order._id, $event.target.value)"
+                    :class="getStatusSelectClass(order.status)"
+                    class="px-3 py-1 rounded-full text-sm font-medium cursor-pointer border-none outline-none"
+                  >
+                    <option value="new">Yangi</option>
+                    <option value="processing">Jarayonda</option>
+                    <option value="delivered">Yetkazildi</option>
+                    <option value="canceled">Bekor qilindi</option>
+                  </select>
+                </td>
+                <td class="py-3 px-4 text-sm text-gray-600">
+                  {{ formatDate(order.createdAt) }}
+                </td>
+                <td class="py-3 px-4">
+                  <button 
+                    @click="viewOrderDetails(order)"
+                    class="text-blue-600 hover:text-blue-700"
+                    title="Ko'rish"
+                  >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         
-        <div v-else-if="orders.length === 0" class="text-center py-12">
-          <p class="text-gray-600">Buyurtmalar topilmadi</p>
-        </div>
-        
-        <div v-else>
-          <div class="overflow-x-auto">
-            <table class="w-full">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th class="text-left py-3 px-4 font-medium">Buyurtma #</th>
-                  <th class="text-left py-3 px-4 font-medium">Mijoz</th>
-                  <th class="text-left py-3 px-4 font-medium">Mahsulotlar</th>
-                  <th class="text-left py-3 px-4 font-medium">Summa</th>
-                  <th class="text-left py-3 px-4 font-medium">Holat</th>
-                  <th class="text-left py-3 px-4 font-medium">Sana</th>
-                  <th class="text-left py-3 px-4 font-medium">Amallar</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr 
-                  v-for="order in orders" 
-                  :key="order._id"
-                  class="border-b hover:bg-gray-50"
-                >
-                  <td class="py-3 px-4">
-                    <p class="font-medium text-red-600">{{ order.orderNumber }}</p>
-                  </td>
-                  <td class="py-3 px-4">
-                    <p class="font-medium">{{ order.customer.name }}</p>
-                    <p class="text-sm text-gray-600">{{ order.customer.phone }}</p>
-                    <p class="text-xs text-gray-500 mt-1">{{ order.customer.address }}</p>
-                  </td>
-                  <td class="py-3 px-4">
-                    <p class="text-sm">{{ order.items.length }} ta mahsulot</p>
-                    <button 
-                      @click="viewOrderDetails(order)"
-                      class="text-xs text-blue-600 hover:underline"
-                    >
-                      Batafsil ko'rish
-                    </button>
-                  </td>
-                  <td class="py-3 px-4 font-semibold">
-                    {{ formatPrice(order.totalPrice) }}
-                  </td>
-                  <td class="py-3 px-4">
-                    <select 
-                      :value="order.status"
-                      @change="updateOrderStatus(order._id, $event.target.value)"
-                      :class="getStatusSelectClass(order.status)"
-                      class="px-3 py-1 rounded-full text-sm font-medium cursor-pointer border-none outline-none"
-                    >
-                      <option value="new">Yangi</option>
-                      <option value="processing">Jarayonda</option>
-                      <option value="delivered">Yetkazildi</option>
-                      <option value="canceled">Bekor qilindi</option>
-                    </select>
-                  </td>
-                  <td class="py-3 px-4 text-sm text-gray-600">
-                    {{ formatDate(order.createdAt) }}
-                  </td>
-                  <td class="py-3 px-4">
-                    <button 
-                      @click="viewOrderDetails(order)"
-                      class="text-blue-600 hover:text-blue-700"
-                      title="Ko'rish"
-                    >
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                      </svg>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          
-          <!-- Pagination -->
-          <div v-if="pagination.totalPages > 1" class="p-4 border-t flex justify-center">
-            <nav class="flex gap-2">
-              <button
-                @click="changePage(pagination.page - 1)"
-                :disabled="pagination.page === 1"
-                class="px-4 py-2 border rounded-lg hover:bg-gray-100 disabled:opacity-50"
-              >
-                Oldingi
-              </button>
-              <span class="px-4 py-2">
-                {{ pagination.page }} / {{ pagination.totalPages }}
-              </span>
-              <button
-                @click="changePage(pagination.page + 1)"
-                :disabled="pagination.page === pagination.totalPages"
-                class="px-4 py-2 border rounded-lg hover:bg-gray-100 disabled:opacity-50"
-              >
-                Keyingi
-              </button>
-            </nav>
-          </div>
+        <!-- Pagination -->
+        <div v-if="pagination.totalPages > 1" class="p-4 border-t flex justify-center">
+          <nav class="flex gap-2">
+            <button
+              @click="changePage(pagination.page - 1)"
+              :disabled="pagination.page === 1"
+              class="px-4 py-2 border rounded-lg hover:bg-gray-100 disabled:opacity-50"
+            >
+              Oldingi
+            </button>
+            <span class="px-4 py-2">
+              {{ pagination.page }} / {{ pagination.totalPages }}
+            </span>
+            <button
+              @click="changePage(pagination.page + 1)"
+              :disabled="pagination.page === pagination.totalPages"
+              class="px-4 py-2 border rounded-lg hover:bg-gray-100 disabled:opacity-50"
+            >
+              Keyingi
+            </button>
+          </nav>
         </div>
       </div>
     </div>
@@ -159,7 +184,8 @@ import { useAuthStore } from '~/stores/auth'
 import { useToast } from '~/composables/useToast'
 
 definePageMeta({
-  middleware: 'admin-auth'
+  middleware: 'admin-auth',
+  layout: 'admin'
 })
 
 const config = useRuntimeConfig()
@@ -266,6 +292,11 @@ const formatDate = (date) => {
     hour: '2-digit',
     minute: '2-digit'
   })
+}
+
+const logout = () => {
+  authStore.logout()
+  navigateTo('/admin/login')
 }
 
 const getStatusSelectClass = (status) => {

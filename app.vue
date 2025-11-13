@@ -1,18 +1,18 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <!-- Desktop Header -->
-    <Header class="hidden md:block" />
+    <!-- Desktop Header - faqat admin bo'lmagan sahifalar uchun -->
+    <Header v-if="!isAdminPage" class="hidden md:block" />
     
     <!-- Main Content -->
     <main class="md:mb-0 mb-16">
       <NuxtPage />
     </main>
     
-    <!-- Desktop Footer -->
-    <Footer class="hidden md:block" />
+    <!-- Desktop Footer - faqat admin bo'lmagan sahifalar uchun -->
+    <Footer v-if="!isAdminPage" class="hidden md:block" />
     
-    <!-- Mobile Navigation -->
-    <MobileNavigation />
+    <!-- Mobile Navigation - faqat admin bo'lmagan sahifalar uchun -->
+    <MobileNavigation v-if="!isAdminPage" />
     
     <!-- PWA Install Prompt -->
     <PWAInstallPrompt />
@@ -37,6 +37,14 @@
 </template>
 
 <script setup>
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+
+// Admin sahifani aniqlash
+const route = useRoute()
+const isAdminPage = computed(() => {
+  return route.path.startsWith('/admin')
+})
+
 // Initialize PWA service worker
 const initServiceWorker = () => {
   if (process.client && 'serviceWorker' in navigator) {
