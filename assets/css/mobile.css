@@ -1,0 +1,192 @@
+/* Mobile Touch Optimizations */
+
+/* Touch-friendly tap targets */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase tap targets for touch devices */
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Remove hover effects on touch devices */
+  .hover-lift:hover {
+    transform: none;
+  }
+  
+  .hover-scale:hover {
+    transform: none;
+  }
+  
+  /* Touch feedback */
+  button:active,
+  a:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Smooth scrolling for mobile */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent text selection on tap */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Better form inputs on mobile */
+input, textarea, select {
+  font-size: 16px; /* Prevent zoom on iOS */
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 8px;
+}
+
+/* Mobile-specific animations */
+@media (max-width: 768px) {
+  /* Reduce animation complexity on mobile */
+  .slide-up {
+    animation-duration: 0.3s;
+  }
+  
+  /* Optimize cart for mobile */
+  .cart-item {
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+  
+  /* Better mobile navigation */
+  .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    padding: 8px 0;
+    z-index: 50;
+  }
+  
+  /* Mobile product grid */
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  
+  /* Touch-friendly buttons */
+  .btn-mobile {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+  }
+  
+  /* Mobile cards */
+  .mobile-card {
+    margin: 8px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Pull-to-refresh indicator */
+.pull-to-refresh {
+  position: fixed;
+  top: -60px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #dc2626;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  z-index: 100;
+}
+
+.pull-to-refresh.active {
+  transform: translateY(60px);
+}
+
+/* Swipe gestures */
+.swipe-container {
+  touch-action: pan-x;
+  overflow-x: hidden;
+}
+
+.swipe-item {
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+}
+
+.swipe-item.swiped {
+  transform: translateX(-80px);
+}
+
+/* Mobile menu animations */
+.mobile-menu-enter-active,
+.mobile-menu-leave-active {
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-enter-from {
+  transform: translateX(-100%);
+}
+
+.mobile-menu-leave-to {
+  transform: translateX(-100%);
+}
+
+/* Haptic feedback simulation */
+@keyframes haptic-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.98); }
+}
+
+.haptic-feedback {
+  animation: haptic-pulse 0.1s ease;
+}
+
+/* Loading states for mobile */
+.mobile-skeleton {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: mobile-skeleton-loading 1.5s infinite;
+}
+
+@keyframes mobile-skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Better mobile scrolling */
+.mobile-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.mobile-scroll::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+/* Mobile-specific shadows */
+.mobile-shadow {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Mobile blur effects */
+.mobile-blur {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}

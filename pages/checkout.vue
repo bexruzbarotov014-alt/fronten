@@ -190,11 +190,13 @@
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useCartStore } from '~/stores/cart'
+import { useCustomerNotificationStore } from '~/stores/customerNotifications'
 import { useToast } from '~/composables/useToast'
-import { useRuntimeConfig } from 'nuxt/app' // Add this line
+import { useRuntimeConfig } from 'nuxt/app'
 
 const config = useRuntimeConfig()
 const cartStore = useCartStore()
+const customerNotificationStore = useCustomerNotificationStore()
 const toast = useToast()
 const { t } = useI18n()
 
@@ -335,6 +337,10 @@ const submitOrder = async () => {
       success.value = true
       orderNumber.value = response.order.orderNumber
       successMessage.value = t('checkout.messages.success', { orderNumber: orderNumber.value })
+
+      // Telefon raqamini saqlash va bildirishnoma qo'shish
+      customerNotificationStore.setPhone(formData.value.phone.trim())
+      customerNotificationStore.addOrderConfirmation(response.order)
 
       cartStore.clearCart()
       removePromoCode()

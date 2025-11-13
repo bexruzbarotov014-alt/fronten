@@ -1,7 +1,5 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <Header />
-    
     <div class="container mx-auto px-4 py-12">
       <div class="text-center mb-12">
         <h1 class="text-4xl font-bold mb-4">Biz bilan bog'laning</h1>
@@ -215,8 +213,6 @@
         </div>
       </div>
     </div>
-    
-    <Footer />
   </div>
 </template>
 

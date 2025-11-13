@@ -1,8 +1,5 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <!-- Header -->
-    <Header />
-    
     <!-- Hero Banner -->
     <section class="bg-gradient-to-r from-red-900 to-red-700 text-white py-20">
       <div class="container mx-auto px-4 text-center">
@@ -59,9 +56,6 @@
         </div>
       </div>
     </section>
-    
-    <!-- Footer -->
-    <Footer />
   </div>
 </template>
 

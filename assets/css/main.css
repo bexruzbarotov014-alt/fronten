@@ -1,5 +1,6 @@
-/* Import custom animations */
+/* Import custom styles */
 @import './animations.css';
+@import './mobile.css';
 
 @tailwind base;
 @tailwind components;

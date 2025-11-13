@@ -1,0 +1,35 @@
+{
+  "name": "AlcoShop - Alkogol Do'koni",
+  "short_name": "AlcoShop",
+  "description": "Alkogol mahsulotlari online do'koni",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#dc2626",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "uz",
+  "categories": ["shopping", "lifestyle"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Katalog",
+      "short_name": "Katalog",
+      "description": "Barcha mahsulotlar",
+      "url": "/catalog"
+    },
+    {
+      "name": "Savatcha",
+      "short_name": "Savatcha",
+      "description": "Savatchangiz",
+      "url": "/cart"
+    }
+  ]
+}

@@ -1,7 +1,5 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <Header />
-    
     <div class="container mx-auto px-4 py-12">
       <!-- Hero -->
       <div class="text-center mb-12">

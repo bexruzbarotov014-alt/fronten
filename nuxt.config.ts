@@ -38,11 +38,20 @@ export default defineNuxtConfig({
       title: 'Alkogol Do\'koni',
       meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Alkogol mahsulotlari online do\'koni' }
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' },
+        { name: 'description', content: 'Alkogol mahsulotlari online do\'koni' },
+        { name: 'theme-color', content: '#dc2626' },
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
+        { name: 'apple-mobile-web-app-title', content: 'AlcoShop' },
+        { name: 'application-name', content: 'AlcoShop' },
+        { name: 'msapplication-TileColor', content: '#dc2626' },
+        { name: 'msapplication-config', content: '/browserconfig.xml' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'apple-touch-icon', href: '/favicon.ico' },
+        { rel: 'manifest', href: '/manifest.json' }
       ]
     },
     pageTransition: { name: 'page', mode: 'out-in' },
