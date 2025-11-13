@@ -1,0 +1,77 @@
+{
+  "brand": {
+    "name": "AlcoShop"
+  },
+  "nav": {
+    "home": "Asosiy",
+    "catalog": "Katalog",
+    "about": "Biz haqimizda",
+    "contact": "Aloqa",
+    "cart": "Savatcha"
+  },
+  "common": {
+    "home": "Asosiy",
+    "catalog": "Katalog",
+    "cart": "Savatcha",
+    "about": "Biz haqimizda",
+    "contact": "Aloqa",
+    "login": "Kirish",
+    "logout": "Chiqish",
+    "search": "Qidirish",
+    "viewAll": "Hammasini ko'rish",
+    "addToCart": "Savatchaga qo'shish",
+    "buyNow": "Xarid qilish",
+    "outOfStock": "Tugagan",
+    "inStock": "Omborda bor",
+    "quantity": "Miqdor",
+    "price": "Narx",
+    "total": "Jami",
+    "checkout": "Buyurtma berish",
+    "continue": "Davom ettirish",
+    "cancel": "Bekor qilish",
+    "save": "Saqlash",
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "loading": "Yuklanmoqda...",
+    "error": "Xatolik yuz berdi",
+    "success": "Muvaffaqiyatli",
+    "confirm": "Tasdiqlash",
+    "back": "Qaytish",
+    "apply": "Qo'llash"
+  },
+  "checkout": {
+    "title": "Buyurtma berish",
+    "empty": "Savatchingiz bo'sh",
+    "backToCatalog": "Katalogga qaytish",
+    "form": {
+      "name": "Ism",
+      "phone": "Telefon",
+      "address": "Manzil",
+      "comment": "Izoh",
+      "submit": "Buyurtma berish",
+      "submitting": "Yuborilmoqda...",
+      "back": "Savatchaga qaytish"
+    },
+    "promo": {
+      "label": "Promo kod",
+      "placeholder": "Promo kodni kiriting",
+      "remove": "O'chirish"
+    },
+    "summary": {
+      "products": "Mahsulotlar",
+      "promoDiscount": "Chegirma",
+      "delivery": "Yetkazish",
+      "deliveryFree": "Bepul",
+      "total": "Jami"
+    },
+    "messages": {
+      "requiredFields": "Barcha maydonlarni to'ldiring",
+      "emptyCart": "Savatcha bo'sh",
+      "enterPromo": "Promo kodni kiriting",
+      "promoInvalid": "Promo kod noto'g'ri",
+      "promoApplied": "Chegirma qo'llandi: {amount}",
+      "generalError": "Xatolik yuz berdi",
+      "success": "Buyurtmangiz qabul qilindi! Buyurtma raqami: {orderNumber}"
+    }
+  }
+}

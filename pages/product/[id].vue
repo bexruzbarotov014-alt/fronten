@@ -15,7 +15,7 @@
     
     <div v-else-if="product" class="container mx-auto px-4 py-8">
       <!-- Breadcrumb -->
-      <nav class="mb-6 text-sm">
+      <nav class="mb-6 text-sm slide-up">
         <ol class="flex items-center space-x-2">
           <li><NuxtLink to="/" class="text-gray-600 hover:text-red-600">Asosiy</NuxtLink></li>
           <li><span class="text-gray-400">/</span></li>
@@ -30,7 +30,7 @@
       </nav>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         <!-- Rasmlar -->
-        <div>
+        <div class="slide-up">
           <div class="bg-white rounded-lg shadow-md overflow-hidden mb-4 h-96">
             <ImageZoom
               :src="selectedImage"
@@ -47,7 +47,7 @@
               :key="index"
               @click="selectImage(index, image)"
               :class="[
-                'border-2 rounded-lg overflow-hidden transition',
+                'border-2 rounded-lg overflow-hidden transition hover-scale',
                 currentImageIndex === index ? 'border-red-600' : 'border-gray-200 hover:border-gray-400'
               ]"
             >
@@ -57,9 +57,10 @@
         </div>
         
         <!-- Ma'lumotlar -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-          <!-- Brend -->
-          <p class="text-gray-600 mb-2">{{ product.brand }}</p>
+        <div class="slide-up" style="animation-delay: 0.1s">
+          <div class="bg-white rounded-lg shadow-md p-6">
+            <!-- Brend -->
+            <p class="text-gray-600 mb-2">{{ product.brand }}</p>
           
           <!-- Nom -->
           <h1 class="text-3xl font-bold mb-4">{{ product.name }}</h1>
@@ -173,17 +174,18 @@
               </div>
             </dl>
           </div>
+          </div>
         </div>
       </div>
       
       <!-- Tavsif -->
-      <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-8 slide-up" style="animation-delay: 0.2s">
         <h2 class="text-2xl font-bold mb-4">Mahsulot haqida</h2>
         <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ product.description }}</p>
       </div>
       
       <!-- O'xshash mahsulotlar -->
-      <div v-if="similarProducts.length > 0" class="mb-8">
+      <div v-if="similarProducts.length > 0" class="mb-8 slide-up" style="animation-delay: 0.3s">
         <h2 class="text-2xl font-bold mb-6">O'xshash mahsulotlar</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           <ProductCard 
@@ -210,7 +212,7 @@ const config = useRuntimeConfig()
 const cartStore = useCartStore()
 const toast = useToast()
 
-// ... rest of the code remains the same ...
+const defaultImage = 'https://via.placeholder.com/600x600?text=No+Image'
 
 const product = ref(null)
 const similarProducts = ref([])

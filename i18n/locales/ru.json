@@ -1,0 +1,77 @@
+{
+  "brand": {
+    "name": "AlcoShop"
+  },
+  "nav": {
+    "home": "Главная",
+    "catalog": "Каталог",
+    "about": "О нас",
+    "contact": "Контакты",
+    "cart": "Корзина"
+  },
+  "common": {
+    "home": "Главная",
+    "catalog": "Каталог",
+    "cart": "Корзина",
+    "about": "О нас",
+    "contact": "Контакты",
+    "login": "Войти",
+    "logout": "Выйти",
+    "search": "Поиск",
+    "viewAll": "Смотреть все",
+    "addToCart": "В корзину",
+    "buyNow": "Купить",
+    "outOfStock": "Нет в наличии",
+    "inStock": "В наличии",
+    "quantity": "Количество",
+    "price": "Цена",
+    "total": "Итого",
+    "checkout": "Оформить",
+    "continue": "Продолжить",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "success": "Успешно",
+    "confirm": "Подтвердить",
+    "back": "Назад",
+    "apply": "Применить"
+  },
+  "checkout": {
+    "title": "Оформление заказа",
+    "empty": "Ваша корзина пуста",
+    "backToCatalog": "Вернуться в каталог",
+    "form": {
+      "name": "Имя",
+      "phone": "Телефон",
+      "address": "Адрес",
+      "comment": "Комментарий",
+      "submit": "Оформить заказ",
+      "submitting": "Отправка...",
+      "back": "Вернуться в корзину"
+    },
+    "promo": {
+      "label": "Промокод",
+      "placeholder": "Введите промокод",
+      "remove": "Удалить"
+    },
+    "summary": {
+      "products": "Товары",
+      "promoDiscount": "Скидка",
+      "delivery": "Доставка",
+      "deliveryFree": "Бесплатно",
+      "total": "Итого"
+    },
+    "messages": {
+      "requiredFields": "Заполните все поля",
+      "emptyCart": "Корзина пуста",
+      "enterPromo": "Введите промокод",
+      "promoInvalid": "Неверный промокод",
+      "promoApplied": "Скидка применена: {amount}",
+      "generalError": "Произошла ошибка",
+      "success": "Заказ принят! Номер заказа: {orderNumber}"
+    }
+  }
+}

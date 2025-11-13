@@ -5,22 +5,22 @@
         <!-- Logo -->
         <NuxtLink to="/" class="text-2xl font-bold text-red-600 flex items-center">
           <span class="text-3xl mr-2">🍷</span>
-          AlcoShop
+          {{ t('brand.name') }}
         </NuxtLink>
-        
+        <LanguageSwitcher />
         <!-- Navigation -->
         <nav class="hidden md:flex space-x-6">
           <NuxtLink to="/" class="text-gray-700 hover:text-red-600 transition">
-            Asosiy
+            {{ t('nav.home') }}
           </NuxtLink>
           <NuxtLink to="/catalog" class="text-gray-700 hover:text-red-600 transition">
-            Katalog
+            {{ t('nav.catalog') }}
           </NuxtLink>
           <NuxtLink to="/about" class="text-gray-700 hover:text-red-600 transition">
-            Biz haqimizda
+            {{ t('nav.about') }}
           </NuxtLink>
           <NuxtLink to="/contact" class="text-gray-700 hover:text-red-600 transition">
-            Aloqa
+            {{ t('nav.contact') }}
           </NuxtLink>
         </nav>
         
@@ -62,28 +62,28 @@
             class="text-gray-700 hover:text-red-600 transition py-2"
             @click="mobileMenuOpen = false"
           >
-            Asosiy
+            {{ t('nav.home') }}
           </NuxtLink>
           <NuxtLink 
             to="/catalog" 
             class="text-gray-700 hover:text-red-600 transition py-2"
             @click="mobileMenuOpen = false"
           >
-            Katalog
+            {{ t('nav.catalog') }}
           </NuxtLink>
           <NuxtLink 
             to="/about" 
             class="text-gray-700 hover:text-red-600 transition py-2"
             @click="mobileMenuOpen = false"
           >
-            Biz haqimizda
+            {{ t('nav.about') }}
           </NuxtLink>
           <NuxtLink 
             to="/contact" 
             class="text-gray-700 hover:text-red-600 transition py-2"
             @click="mobileMenuOpen = false"
           >
-            Aloqa
+            {{ t('nav.contact') }}
           </NuxtLink>
         </nav>
       </div>
@@ -96,8 +96,11 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import LanguageSwitcher from '~/components/LanguageSwitcher.vue'
 import { useCartStore } from '~/stores/cart'
 
+const { t } = useI18n()
 const cartStore = useCartStore()
 const mobileMenuOpen = ref(false)
 </script>

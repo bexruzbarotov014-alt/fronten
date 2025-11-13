@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     // LocalStorage'dan yuklash
     authStore.loadFromLocalStorage()
     
-    // Agar authenticate bo'lmagan bo'lsa
+    // Agar authenticate bo'lmagan bo'lsac
     if (!authStore.isAuthenticated) {
       return navigateTo('/admin/login')
     }

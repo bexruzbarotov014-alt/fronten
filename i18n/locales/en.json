@@ -1,0 +1,77 @@
+{
+  "brand": {
+    "name": "AlcoShop"
+  },
+  "nav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "about": "About",
+    "contact": "Contact",
+    "cart": "Cart"
+  },
+  "common": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "cart": "Cart",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "logout": "Logout",
+    "search": "Search",
+    "viewAll": "View All",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "outOfStock": "Out of Stock",
+    "inStock": "In Stock",
+    "quantity": "Quantity",
+    "price": "Price",
+    "total": "Total",
+    "checkout": "Checkout",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "loading": "Loading...",
+    "error": "Error occurred",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "apply": "Apply"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "empty": "Your cart is empty",
+    "backToCatalog": "Back to catalog",
+    "form": {
+      "name": "Name",
+      "phone": "Phone",
+      "address": "Address",
+      "comment": "Comment",
+      "submit": "Place Order",
+      "submitting": "Submitting...",
+      "back": "Back to cart"
+    },
+    "promo": {
+      "label": "Promo code",
+      "placeholder": "Enter promo code",
+      "remove": "Remove"
+    },
+    "summary": {
+      "products": "Products",
+      "promoDiscount": "Discount",
+      "delivery": "Delivery",
+      "deliveryFree": "Free",
+      "total": "Total"
+    },
+    "messages": {
+      "requiredFields": "Please fill all fields",
+      "emptyCart": "Cart is empty",
+      "enterPromo": "Enter promo code",
+      "promoInvalid": "Invalid promo code",
+      "promoApplied": "Discount applied: {amount}",
+      "generalError": "An error occurred",
+      "success": "Order placed! Order number: {orderNumber}"
+    }
+  }
+}

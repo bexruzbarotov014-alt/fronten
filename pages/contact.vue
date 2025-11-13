@@ -223,6 +223,8 @@
 <script setup>
 import { ref } from 'vue'
 
+const config = useRuntimeConfig()
+
 const formData = ref({
   name: '',
   phone: '',
@@ -235,30 +237,39 @@ const loading = ref(false)
 const successMessage = ref('')
 const errorMessage = ref('')
 
-const sendMessage = () => {
+const resetForm = () => {
+  formData.value = {
+    name: '',
+    phone: '',
+    email: '',
+    subject: '',
+    message: ''
+  }
+}
+
+const sendMessage = async () => {
   loading.value = true
   successMessage.value = ''
   errorMessage.value = ''
   
-  // Simulate sending
-  setTimeout(() => {
+  try {
+    await $fetch(`${config.public.apiBase}/contact-messages`, {
+      method: 'POST',
+      body: { ...formData.value }
+    })
+    
     successMessage.value = 'Xabaringiz muvaffaqiyatli yuborildi! Tez orada siz bilan bog\'lanamiz.'
-    loading.value = false
+    resetForm()
     
-    // Reset form
-    formData.value = {
-      name: '',
-      phone: '',
-      email: '',
-      subject: '',
-      message: ''
-    }
-    
-    // Hide success message after 5 seconds
     setTimeout(() => {
       successMessage.value = ''
     }, 5000)
-  }, 1500)
+  } catch (error) {
+    console.error('Xabar yuborishda xatolik:', error)
+    errorMessage.value = error?.data?.message || 'Xabar yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.'
+  } finally {
+    loading.value = false
+  }
 }
 
 useHead({

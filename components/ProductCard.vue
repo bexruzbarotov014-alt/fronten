@@ -1,13 +1,13 @@
 <template>
-  <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+  <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 hover-lift group">
     <NuxtLink :to="`/product/${product._id}`">
       <!-- Rasm -->
       <div class="relative h-64 bg-gray-200">
         <img 
-          v-if="product.images && product.images.length > 0"
-          :src="product.images[0]" 
+          v-if="primaryImage"
+          :src="primaryImage" 
           :alt="product.name"
-          class="w-full h-full object-cover"
+          class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
         />
         <div v-else class="w-full h-full flex items-center justify-center text-gray-400 text-6xl">
           🍷
@@ -98,6 +98,30 @@ const props = defineProps({
 
 const cartStore = useCartStore()
 const toast = useToast()
+
+const normalizeImages = (images) => {
+  if (!images) return []
+  if (Array.isArray(images)) {
+    return images.filter(Boolean)
+  }
+
+  if (typeof images === 'string') {
+    try {
+      const parsed = JSON.parse(images)
+      if (Array.isArray(parsed)) {
+        return parsed.filter(Boolean)
+      }
+    } catch (e) {
+      return [images]
+    }
+  }
+
+  return []
+}
+
+const imageList = computed(() => normalizeImages(props.product?.images))
+
+const primaryImage = computed(() => imageList.value[0] || '')
 
 const finalPrice = computed(() => {
   if (props.product.discountPercent > 0) {
