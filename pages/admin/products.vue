@@ -244,29 +244,38 @@ onMounted(() => {
 
 const fetchProducts = async () => {
   loading.value = true
-  
+
   try {
     const params = new URLSearchParams({
       page: pagination.value.page,
       limit: pagination.value.limit,
       sort: sortBy.value
     })
-    
-    if (filterCategory.value) {
-      params.append('category', filterCategory.value)
-    }
-    if (searchQuery.value) {
-      params.append('search', searchQuery.value)
-    }
-    
-    const data = await $fetch(`${config.public.apiBase}/products?${params}`, {
+
+    if (filterCategory.value) params.append('category', filterCategory.value)
+    if (searchQuery.value) params.append('search', searchQuery.value)
+
+    // Normalize base (avoid double slashes)
+    const base = (config.public.apiBase || '').replace(/\/+$/, '')
+    const url = `${base}/products?${params.toString()}`
+
+    const data = await $fetch(url, {
       headers: authStore.getAuthHeader()
     })
-    
-    products.value = data.products
-    pagination.value = data.pagination
+
+    products.value = Array.isArray(data.products) ? data.products : []
+    pagination.value = data.pagination || {
+      total: products.value.length,
+      page: 1,
+      limit: products.value.length || 20,
+      totalPages: 1
+    }
   } catch (error) {
     console.error('Mahsulotlarni olishda xatolik:', error)
+    const message = error?.data?.message || error?.message || 'Mahsulotlarni olishda xatolik yuz berdi'
+    toast.error(message)
+    products.value = []
+    pagination.value = { total: 0, page: 1, limit: 20, totalPages: 1 }
   } finally {
     loading.value = false
   }

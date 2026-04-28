@@ -1,4 +1,5 @@
-// nuxt.config.ts
+// https://nuxt.com/docs/getting-started/configuration
+// @ts-check
 export default defineNuxtConfig({
   devtools: { enabled: true },
   
@@ -10,20 +11,19 @@ export default defineNuxtConfig({
  
   i18n: {
     locales: [
-     { code: 'uz', name: 'O‘zbek', file: 'uz.json' },
-      { code: 'ru', name: 'Русский', file: 'ru.json' },
-      { code: 'en', name: 'English', file: 'en.json' }
+      { code: 'uz', iso: 'uz', name: 'O\'zbek' },
+      { code: 'ru', iso: 'ru', name: 'Русский' },
+      { code: 'en', iso: 'en', name: 'English' }
     ],
-    lazy: true,
-    langDir: 'locales',
     defaultLocale: 'uz',
     strategy: 'prefix_except_default',
+    langDir: 'locales',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
       redirectOn: 'root'
-  
-  }},
+    }
+  },
   css: ['~/assets/css/main.css'],
   
   runtimeConfig: {
